@@ -1,8 +1,11 @@
-# 这是标题
-我眼中的 javascript 异步编程风格变化
+# 个人总结
+
+我眼中的 javascript 异步编程风格变化，喜欢就 star 一下
 
 [开始](前言.md)
 
-![ec1d29292df5e0fe75c0c0b25e6034a85fdf72af](media/15108379400724/ec1d29292df5e0fe75c0c0b25e6034a85fdf72af.jpg)
+![begin](media/begin.jpg)
 
-喜欢就 star 一下
+封面来自P站-雨墨，砂の惑星
+
+[Link]https://www.pixiv.net/member_illust.php?mode=medium&illust_id=65841814
