@@ -125,6 +125,8 @@ g.next().then(value => {
   // value === 'index'
 })
 
+// 以下代码，摘自阮一峰先生的es6tutorial
+// https://github.com/ruanyf/es6tutorial/blob/gh-pages/docs/async.md
 // 后话 还在提案中 目的是让同步 Generator 和异步 Generator 表现形式一致
 async function* readLines(path) {
   let file = await fileOpen(path);
