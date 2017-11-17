@@ -56,22 +56,24 @@ db.find('condtion_1', function () {
 以下为 `async` 异步回调流程控制库的几个方法，原理上的简单实现
 
 #### callback 并发流程控制
+
 定义一个函数 parellel, 对两个没有先后关联异步操作做流程控制，在完成操作后，执行后续逻辑
+
 ```js
 // 一个异步操作回调封装
 function foo(t, callback) {
-	return function (callback) {
-		setTimeout(function() {
-			// 闭包 t 变量
-			callback(null, t)
-		}, t)
-	}
+  return function (callback) {
+    setTimeout(function () {
+      // 闭包 t 变量
+      callback(null, t)
+    }, t)
+  }
 }
 
 parellel([
   foo(500)
   foo(1000)
-], function(err, res) {
+], function (err, res) {
   // 总计 1000ms 完成
   // 且保证返回值顺序与执行顺序500, 1000对应
   // next... 执行后续逻辑
@@ -86,11 +88,11 @@ function parellel(tasks, callback) {
   for (var i = 0; i < tasks.length; i++) {
     // 注意使用IIFE自执行函数来创建块作用域，来保证闭包里i的值正常传递。
     // 不然就要使用 let i = 0 定义即可
-    (function(i) {
+    (function (i) {
       quit++ // 开启一次异步操作
-      
+
       // 执行，传入要执行的回调
-      tasks[i].call(null, function(err, res) {
+      tasks[i].call(null, function (err, res) {
         if (err && !done) {
           // 当一个异步操作有错误，停止回调抛错， done目的只让一次错误抛出，不让总callback被多次执行
           done = true
@@ -115,18 +117,20 @@ function parellel(tasks, callback) {
 ```
 
 #### callback 串行流程控制一: series
+
 定义一个函数 series, 对两个有前后关系的异步操作做串行处理，在串行完成后，执行后续逻辑
+
 ```js
 var fn1 = foo(500),
 var fn2 = foo(1000)
 series([
   fn1,
   fn2
-], function(err, res) {
+], function (err, res) {
   // 第一个 fn1 执行完成后执行第二个 fn2
   // 总时长1500ms
   if (err) {
-    return 
+    return
   }
   // next 后续逻辑
 })
@@ -138,12 +142,12 @@ function series(tasks, callback) {
   let i = 0 // 定义控制变量
 
   if (!Array.isArray(tasks) || len === 0) {
-  	 // 判空
+    // 判空
     callback(null, [])
     return
   }
 
-	// 定义每个task的回调函数内容
+  // 定义每个task的回调函数内容
   function next(err, res) {
     // 异常处理
     if (err) {
@@ -168,24 +172,26 @@ function series(tasks, callback) {
 ```
 
 #### callback 串行流程控制二: reduce
+
 定义一个函数 reduce, 用做异步串行控制，不同于上述，将上一个异步回调的值传入下一个，最终总结抛出，类似 Array.prototype.reduce
+
 ```js
 // 封装异步操作函数 bar
 function bar(num, callback) {
   if (typeof num !== 'number') num = 0
-  setTimeout(function() {
+  setTimeout(function () {
     callback(null, ++num)
   }, 1000)
 }
 
-reduce([bar, bar, bar], null, function(preValue, currentFunc, callback) {
+reduce([bar, bar, bar], null, function (preValue, currentFunc, callback) {
   // preValue 上一次回调的结果，初始值为第二个参数
   // currentFunc 当前执行的函数
-  currentFunc(preValue, function(err, res) {
+  currentFunc(preValue, function (err, res) {
     // 处理完毕，传递下次
     callback(null, res)
   })
-}, function(err, result) {
+}, function (err, result) {
   // 串行结果传递 最终 0 -> 1 -> 2 -> 3
   // 最终执行时长3000ms
   console.log(result) // 3
@@ -217,30 +223,31 @@ function reduce(list, init, task, callback) {
 核心还是回调，不过 `event` 做了封装 `on，emit` 来对应订阅/发布，执行回调
 
 `event`标准库实现原理
+
 ```js
 // 简单实现
 var event = {}
 var c = {}
 
-event.on = function(channel, emit) {
-	c[channel] = emit
+event.on = function (channel, emit) {
+  c[channel] = emit
 }
 
-event.emit = function(channel) {
-	if (typeof c[channel] === 'function') {
-		c[channel].apply(null, Array.prototype.slice.call(arguments, 1))
-	}
+event.emit = function (channel) {
+  if (typeof c[channel] === 'function') {
+    c[channel].apply(null, Array.prototype.slice.call(arguments, 1))
+  }
 }
 
-event.on('foo', function(say) {
-	console.log(say)
+event.on('foo', function (say) {
+  console.log(say)
 })
 
 event.emit('foo', 1)  // log 1
-```
+  ```
 
 #### 简单的通过 event 机制来控制异步回调流程并行
-以下为 `eventproxy(jacksontian)` 的几个方法原理上的简单实现
+以下为 `eventproxy(jacksontian) ` 的几个方法原理上的简单实现
 
 ```js
 // 实现效果
@@ -260,7 +267,7 @@ ep._$on('c', 'b', function (c, b) {
 // 注册错误处理，如果在 callback 里 emit 了错误，_$fail注册的错误处理，将捕获执行后续错误逻辑
 ep._$fail(function (err) {
   console.log(err)
-  
+
   // 处理后续错误
   // next err...
 })
@@ -282,10 +289,10 @@ var util = require('util')
 // 自定义事件订阅发布构造函数，继承标准库的所有方法
 // 也可以使用 es6 class 即 class evCustom extends event {}
 function evCustom() {
-	// 用来放置实例化后的事件列表
+  // 用来放置实例化后的事件列表
   this.eventsList = []
-	
-	// 继承自有属性
+
+  // 继承自有属性
   event.call(this)
 }
 
@@ -293,7 +300,7 @@ function evCustom() {
 evCustom.prototype._$on = function () {
   var self = this
   var result = [] // 存储返回值
-  
+
   var len = Object.keys(arguments).length - 1 // 使用传递的事件数量，作为监听第三方变量
   var callback = arguments[len] // 取出最后一位的callback
 
