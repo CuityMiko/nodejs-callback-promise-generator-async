@@ -12,6 +12,6 @@ callback -> promise -> generator -> async/await
 
 ![begin](media/begin.jpg)
 
-封面来自P站-雨墨，砂の惑星
+封面来自P站-雨陌，砂の惑星
 
 [Link](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=65841814)
