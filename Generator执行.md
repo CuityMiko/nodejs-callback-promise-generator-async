@@ -122,7 +122,7 @@ app.use(function* () {
 })
 ```
 
-执行器错误捕获原理
+Generator 执行器错误捕获原理
 
 ```js
 // co 处理reject态下
