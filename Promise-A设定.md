@@ -28,7 +28,7 @@ readFile('./test.txt').then(content => {
 
 ## 语法使用
 
-Promise对象将回调里的错误标记为`reject`态，通过外部`.catch()`方法捕获。正常为 `resolve` 态，传递给 `.then()` 方法捕获，将原来回调的嵌套逻辑，改为了链条式操作，让肉眼感觉出了一条一条同步的感觉
+Promise 对象将回调里的错误标记为`reject`态，通过外部`.catch()`方法捕获。正常为 `resolve` 态，传递给 `.then()` 方法捕获。将原来回调的嵌套逻辑，改为了链条式操作，让肉眼感觉出了一条一条同步的感觉
 
 ```js
 // 串行链
@@ -206,6 +206,10 @@ function sleep(param) {
 ## 题外话
 
 值得一提: `ES` 规范中 `Promise` 构造函数里 resolve 或 reject 方法只有第一次执行有效，多次调用失效，即 `Promise` 状态一旦改变则不能再变。
+
+以下代码摘自 cnode 社区帖子
+
+https://cnodejs.org/topic/5a014cbe235953e84e47d543
 
 ```js
 const promise = new Promise((resolve, reject) => {
