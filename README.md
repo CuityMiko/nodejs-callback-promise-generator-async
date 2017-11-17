@@ -8,4 +8,4 @@
 
 封面来自P站-雨墨，砂の惑星
 
-[Link]https://www.pixiv.net/member_illust.php?mode=medium&illust_id=65841814
+[Link](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=65841814)
