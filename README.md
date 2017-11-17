@@ -1,8 +1,12 @@
-# 个人总结
+# 这是标题
 
-我眼中的 javascript 异步编程风格变化，喜欢就 star 一下
+我眼中的 javascript 异步编程风格变化
 
-[开始](前言.md)
+callback -> promise -> generator -> async/await
+
+喜欢就 star 一下
+
+[开始阅读](前言.md)
 
 ![begin](media/begin.jpg)
 
