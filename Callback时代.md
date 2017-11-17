@@ -305,7 +305,8 @@ evCustom.prototype._$on = function () {
   var self = this
   var result = [] // 存储返回值
 
-  var len = Object.keys(arguments).length - 1 // 使用传递的事件数量，作为监听第三方变量
+  // 使用传递的事件数量，作为监听第三方变量
+  var len = Object.keys(arguments).length - 1 
   var callback = arguments[len] // 取出最后一位的callback
 
   function foo(idx) {
