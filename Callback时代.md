@@ -94,7 +94,8 @@ function parellel(tasks, callback) {
       // 执行，传入要执行的回调
       tasks[i].call(null, function (err, res) {
         if (err && !done) {
-          // 当一个异步操作有错误，停止回调抛错， done目的只让一次错误抛出，不让总callback被多次执行
+          // 当一个异步操作有错误，停止回调抛错。
+          // done目的只让一次错误抛出，不让总callback被多次执行
           done = true
           // 总回调传出错误
           callback(err)
@@ -103,7 +104,8 @@ function parellel(tasks, callback) {
 
         // 正常，减掉控制器
         quit--
-        result[i] = res // 保存一次的异步的值，按照顺序，即操作的排列与返回值的排列一样
+        // 保存一次的异步的值，按照顺序，即操作的排列与返回值的排列一样
+        result[i] = res 
         if (quit <= 0) {
           // 判断控制器全部完成
           done = true
@@ -158,7 +160,8 @@ function series(tasks, callback) {
     result.push(res)
     i++ // 控制变量自增
 
-    // 判断控制变量是否已经达到全部异步回调执行完成,如果未完成，递归自身，否则执行总回调，传出最终执行完毕的result
+    // 判断控制变量是否已经达到全部异步回调执行完成。
+    // 如果未完成，递归自身，否则执行总回调，传出最终执行完毕的result
     if (i < len) {
       tasks[i].call(null, next)
     } else {
@@ -264,7 +267,8 @@ ep._$on('c', 'b', function (c, b) {
   // next...
 })
 
-// 注册错误处理，如果在 callback 里 emit 了错误，_$fail注册的错误处理，将捕获执行后续错误逻辑
+// 注册错误处理，如果在 callback 里 emit 了错误。
+// _$fail注册的错误处理，将捕获执行后续错误逻辑
 ep._$fail(function (err) {
   console.log(err)
 
@@ -354,5 +358,6 @@ evCustom.prototype._$fail = function (callback) {
 util.inherits(evCustom, event)
 ```
 
+## 跳转
 
 [下一章: Promise-A设定](Promise-A设定.md)

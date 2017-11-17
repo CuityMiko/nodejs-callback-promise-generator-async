@@ -3,11 +3,13 @@
 Promise 将回调嵌套转换成了链式操作，形象上，更符合人脑逻辑了。
 
 Promise/A 作为 `callback` 的升级方案，后面`ES`的升级方案都是基于 Promise，神奇的Promise。由于 nodejs 底层的异步逻辑，在js层面上是通过 `event.on/ event.emit` 来建立 `i/o` 调用和收到 `i/o` 返回值的，这里还是函数回调，需要通过 `Promise` 处理这个异步逻辑。
-```javascript
-// Promise 三种状态 pending(等待resolve) fulfilled(完成resolve) reject(拒绝catch)
+
+```js
+// Promise 三种状态 
+// pending(等待resolve) fulfilled(完成resolve) reject(拒绝catch)
 function readFile(path) {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf8', function(err, res) {
+    fs.readFile(path, 'utf8', function (err, res) {
       if (err) {
         reject(err)
       } else {
