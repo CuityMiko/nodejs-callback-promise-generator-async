@@ -1,42 +1,47 @@
 # Callback 时代
+
 ## 混沌
+
 在 `Promise` 的概念还没普及前，比如ES5，异步编程是回调的形式，所以需要通过函数封装，通过闭包原理，将要处理的结果值往作用域外层传递，所以 `callback` 回调函数模式很盛行 ，比如 `jquery`里`ajax` 函数(后续 `jquery` 支持 `Promise`，甚至 `ajax` 函数执行的参数列表里有参数标示同步执行)
+
 ```js
-$(function() {
-	// 定义请求函数
-	function request(uri, callback) {
-		$.ajax({
-			url: uri,
-			method: 'get',
-			success: function(data) {
-				callback(null, data)
-			},
-			error: function(xhr, textStatus, errorThrown) {
-				callback(errorThrown)
-			}
-		})
-	}
-	
-	// callback函数，参数列表规定，第一个参数为错误抛出，第二个参数为响应值
-	request('http://baidu.com', function (err, data) {
-		if (err) {
-		// handle error
-			return
-		}
-		// handle after request logic
-		console.log(data)
-	})
+$(function () {
+  // 定义请求函数
+  function request(uri, callback) {
+    $.ajax({
+      url: uri,
+      method: 'get',
+      success: function (data) {
+        callback(null, data)
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        callback(errorThrown)
+      }
+    })
+  }
+
+  // callback函数，参数列表规定，第一个参数为错误抛出，第二个参数为响应值
+  request('http://baidu.com', function (err, data) {
+    if (err) {
+      // handle error
+      return
+    }
+    // handle after request logic
+    console.log(data)
+  })
 })
 ```
 
 ## 流程写法崩坏，回调黑洞
+
 人们为了能清晰处理 `callback`，而封装出许多**回调流程控制函数**，来控制出现回调黑洞，并行回调，串行回调。在 `nodejs` 编写的 `web` 应用，在处理无相关的 `i/o` 操作里，都应该并行回调，让一次请求快速完成响应，否则响应过久，在高负载下，导致的请求连接堆积，降低服务的负载能力，qps值也会下降(全是`pending`)，当然这不是一个原因(还有`gc`导致js逻辑执行延后，cpu执行打满，无力再执行新的js逻辑等等...)。还有并行回调对于目标地址，也是有成本的，比如请求数据库服务，导致数据库服务压力上升，这时候要考虑队列化并发请求...还有单线程的并发能力很有限，是一段段js逻辑调用底层线程池，这点`golang`这样的`goroutine`很厉害。
+
 ```js
 // 回调黑洞
-db.find('condtion_1', function() {
-  db.find('condtion_2', function() {
-    db.find('condition_3', function() {
-      db.find('condition_4', function() {
+db.find('condtion_1', function () {
+  db.find('condtion_2', function () {
+    db.find('condition_3', function () {
+      db.find('condition_4', function () {
         //...//
       })
     })
