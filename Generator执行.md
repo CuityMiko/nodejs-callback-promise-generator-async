@@ -39,7 +39,7 @@ for (value of g3) {
 
 ## 为什么在结合Promise下，能用于控制异步回调流程
 
-`generaotr`函数执行之后，返回一个遍历器，规定了一种协议：`g.next()`执行结果为 `{ done: boolean, value: {...} }`，指向遍历位置所处的 `yield || return ...` 位置 ，`value` 表示当前遍历位置的值，`done` 表示当前遍历是否结束。`next` 函数执行如果传递值的话 `g.next('something')`，会生成上一个 `yield` 表达式的返回值。所以，如果这样操作，`g.next().value.then(res => g.next(res))`，则星函数内部可以写成 `var res = yield Promise.resolve('something')`，出现看似同步的函数执行起来。
+`generaotr`函数执行之后，返回一个遍历器，规定了一种协议：`g.next()`执行结果为 `{ done: boolean, value: {...} }`，指向遍历位置所处的 `yield || return ...` 位置 ，`value` 表示当前遍历位置的值，`done` 表示当前遍历是否结束。`next` 函数执行如果传递值的话 `g.next('something')`，会生成上一个 `yield` 表达式的返回值。所以，如果这样操作，`g.next().value.then(res => g.next(res))`，那么星函数内部就可以写成 `var res = yield Promise.resolve('something')`，出现看似同步的函数执行起来。
 
 ```js
 function* gen() {
