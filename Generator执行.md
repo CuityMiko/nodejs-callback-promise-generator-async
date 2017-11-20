@@ -176,7 +176,7 @@ app.use(function* () {
 })
 ```
 
-并行，与 Promise.all 一样的逻辑, 见 co , koa 的处理
+并发，与 Promise.all 一样的逻辑, 见 co , koa 的处理
 
 ```js
 // return Promise

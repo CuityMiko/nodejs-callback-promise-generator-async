@@ -44,7 +44,7 @@ readFile('./test_1.txt').then(() => {
 ```
 
 ```js
-// 并行链
+// 并发链
 Promise.all([
   readFile('./test_2.txt'),
   readFile('./test_2.txt')
@@ -161,7 +161,7 @@ Promise.prototype.catch = function (callback) {
 }
 ```
 
-#### 一段简单的并行Polyfill
+#### 一段简单的并发Polyfill
 
 ```js
 Promise.all = function (tasks) {
