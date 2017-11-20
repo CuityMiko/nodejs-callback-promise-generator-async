@@ -2,7 +2,7 @@
 
 流程再次进化，去除链式效果，出现肉眼上的同步函数
 
-Generator 星函数 `node v4.8` 加入。结合 Promise 可用于美化异步回调
+Generator 星函数，新特性 `node v4.8` 加入。结合 Promise 可用于美化异步回调
 
 ## 简单使用
 
