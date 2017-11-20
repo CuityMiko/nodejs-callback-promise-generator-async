@@ -139,7 +139,7 @@ function co(gen) {
   return new Promise((resolve, reject) => {
     let g = gen()
 
-    g.next().then(() => {
+    g.next().value.then(() => {
 
     }).catch(e => {
       // 对应指定的迭代位置抛出生成的捕获的 reject 态
