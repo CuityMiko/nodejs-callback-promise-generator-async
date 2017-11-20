@@ -102,7 +102,7 @@ function parellel(tasks, callback) {
           return
         }
 
-        // 正常，减掉控制器
+        // 正常，减掉控制变量
         quit--
         // 保存一次的异步的值，按照顺序，即操作的排列与返回值的排列一样
         result[i] = res 
